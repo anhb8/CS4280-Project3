@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -g
 
-SRC = scanner.h parser.h lex.h token.h tree.h node.h constant.h
+SRC = scanner.h parser.h lex.h token.h tree.h node.h constant.h adapter.h
 
-OBJ = scanner.o parser.o tree.o
+OBJ = scanner.o parser.o tree.o adapter.o
 MASTER_OBJ = main.o
 
-MASTER = frontEnd
+MASTER = statSem
 
 OUTPUT = $(MASTER)
 
