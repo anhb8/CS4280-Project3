@@ -57,24 +57,10 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
-//	struct node* root = parser(fileName); 
+	struct node* root = parser(fileName); 
 	struct Stack* stack = createStack(MAXVARS);
-	int i;
-	for(i = 0; i < 5; i++){
-		char* testChar = "test";
-		struct token* temp = (struct token*)malloc(sizeof(struct token));
-		temp->tokenID = i;
-		temp->line = i;
-		temp->charN = i;
-		temp->tokenIns = (char*)malloc(sizeof(testChar));
-		strcpy(temp->tokenIns,testChar);
-		push(stack,temp);
-	}
-	for(i = 0; i<5; i++){
-		pop(stack);
-	}
-	
-//	preorder(root,0);	
+	preorder(root,stack);	
+
 	printf("Parser successfully\n");	
 	
 	return EXIT_SUCCESS;		

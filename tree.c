@@ -10,25 +10,52 @@ struct node * createNode(char * nodeN) {
 	strcpy(temp->fName,nodeN);
 	
 	temp->arrToken = (struct token **) malloc(5*sizeof(struct token*));
+	temp->arrSize = 0;
 	return temp;
 }
-void preorder(struct node* ptr, int level){
+int varCount[100] = {0};
+int indexVar = 0;
+
+void preorder(struct node* ptr,struct Stack* stack){
 	if(ptr!=NULL){
-		int i;
-		for(i = 0; i < level;i++){
-			printf(" ");
+		if(strcmp(ptr->fName,"block")==0) {
+			indexVar++;
 		}
-		printf("%s ",ptr->fName);
-		i = 0;
-		while(ptr->arrToken[i]!= NULL && i < 5){
-			printf("'%s' ",ptr->arrToken[i]->tokenIns);
-			i++;
+
+		else if (strcmp(ptr->fName,"vars")==0 && ptr->arrSize>0) {
+			if (find(stack,ptr->arrToken[1])!=-1) {
+				printf("Error: Token %s already exists (Line %d)\n",ptr->arrToken[1]->tokenIns,ptr->arrToken[1]->line);
+				exit(1);
+			}
+			push(stack,ptr->arrToken[1]);
+			varCount[indexVar]++;
 		}
-	printf("\n");
-        preorder(ptr->firstN, level+1);
-        preorder(ptr->secondN, level+1);
-        preorder(ptr->thirdN, level+1);
-        preorder(ptr->fourthN, level+1);
+
+		else {
+			int i;
+			for (i=0;i<ptr->arrSize;i++) {
+				if (ptr->arrToken[i]->tokenID==IDENT) {
+					if(find(stack,ptr->arrToken[i])==-1) {
+						printf("Error: Undefined variables %s (Line %d)\n",ptr->arrToken[i]->tokenIns,ptr->arrToken[i]->line);
+						exit(1);
+					}
+				}
+			}
+		}
+
+		preorder(ptr->firstN, stack);
+        	preorder(ptr->secondN, stack);
+        	preorder(ptr->thirdN, stack);
+        	preorder(ptr->fourthN, stack);
+	
+		if(strcmp(ptr->fName,"block")==0) {
+			while(varCount[indexVar]>0){
+				pop(stack);
+				varCount[indexVar]--;
+			}
+			indexVar--;	
+		}	
 	}
 
 }
+

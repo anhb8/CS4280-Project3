@@ -9,6 +9,7 @@ struct node
         struct node* thirdN;
 	struct node* fourthN;
 	char* fName;
+	int arrSize;
 	struct token **arrToken;
 };
 

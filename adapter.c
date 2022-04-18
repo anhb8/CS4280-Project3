@@ -27,7 +27,6 @@ void push(struct Stack* stack, struct token * newToken) {
 	}
 	
 	stack->array[++stack->top] = newToken;
-	printf("TokenID %d is pushed on the stack\n",stack->array[stack->top]->tokenID);
 }
 
 void pop(struct Stack* stack) {
@@ -36,7 +35,6 @@ void pop(struct Stack* stack) {
 		exit(1);
 	}	
 	
-	printf("TokenID %d is being popped\n",stack->array[stack->top]->tokenID);
 	 stack->array[stack->top--]=NULL;	
 	
 

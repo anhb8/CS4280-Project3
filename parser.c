@@ -152,7 +152,8 @@ void attachToken(struct node** tempN) {
 			(*tempN)->arrToken[i] = tempT;
 			break;
 		}
-	}	
+	}
+	(*tempN)->arrSize++;	
 }
 struct node * vars() {
 	struct node *temp = createNode("vars");
